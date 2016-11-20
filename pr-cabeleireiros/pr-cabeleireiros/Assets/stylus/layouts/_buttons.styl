@@ -1,0 +1,30 @@
+﻿.btn-default {
+	color: $btn-default-color;
+	background-color: $btn-default-bg;
+	border-color: $btn-default-border;
+
+	&:hover,
+	&:active,
+	&:focus,
+	&:active:focus {
+		color: @color;
+		background-color: darken(@background-color, 20%);
+		border-color: $btn-default-border;
+	}
+}
+
+.btn-top {
+	font-weight: bold;
+	color: $btn-top-color;
+    background-color: $btn-top-bg;
+    border-color: $btn-top-border;
+
+	&:hover,
+	&:active,
+	&:focus,
+	&:active:focus {
+		color: @color;
+		background-color: darken(@background-color, 20%);
+		border-color: $btn-top-border;
+	}
+}

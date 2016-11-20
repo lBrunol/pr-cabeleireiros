@@ -1,0 +1,75 @@
+$clearfix {
+	&:after {
+		content: "";
+    	display: table;
+    	clear: both;
+	}
+}
+
+color-anchor(color = #fff) {
+	a,
+	a:active,
+	a:focus,
+	a:hover {
+		color: color;
+	}
+}
+
+bar-hover($direction = 'bottom', $size = 4px, $color = $base-site, $animation-duration = 0.15s, $class = '.-is-active'){
+	
+	if ($direction == 'left'){
+		pos = @block {
+			width: $size;
+			height: 100%;
+			top: 0;
+			left: 0;
+			transform: translateX(-($size));
+		}
+	} else if ($direction == 'right') {
+		pos = @block {
+			width: $size;
+			height: 100%;
+			top: 0;
+			right: 0;
+			transform: translateX($size);
+		}
+	} else if ($direction == 'bottom') {
+		pos = @block {
+			width: 100%;
+			height: $size;
+			bottom: 0;
+			left: 0;
+			transform: translateY($size);
+		}
+	} else {
+		pos = @block {
+			width: 100%;
+			height: $size;
+			top: 0;
+			left: 0;
+			transform: translateY(-($size));
+		}
+	}
+
+	&:after {
+	    content: '';
+	    {pos};
+	    background-color: $color;
+	    transform-origin: center;
+	    transition: transform $animation-duration, opacity $animation-duration ease-in-out;
+	    display: inline-block;
+	    position: absolute;
+	}
+	
+	&:hover,
+	&:focus,
+	&{$class} {
+		&:after {
+		    content: '';
+		    transform: translateY(0);
+		    transform: translateX(0);
+		    transition: transform 0.2s, opacity 0.2s ease-in-out;
+		    opacity: 1;
+		}
+	}
+}

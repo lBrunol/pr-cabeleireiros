@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+
+.navbar{
+    margin-bottom: 0px;
+}
+
+
+.navbar-default li a:hover{
+    transition:0.5s;
+    background-color: #000000 !important;
+   color: #FFFFFF !important;
+
+}
+
+#principalManager{
+    width: 100%;
+    background-color: #e8e8e8;
+}
+
+.box{
+    margin-top: 10px;
+    height: 200px;
+
+}
+.box:hover{
+
+
+}
+div.usuarios{
+    border: 0px !important;
+    background-color: #2aabd2 !important;
+    box-shadow: 4px 4px 4px #7b7b7b;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    margin:auto;
+    padding: 30px;
+    width: 90%;
+    height: 90%;
+    background-color: whitesmoke;
+}
+div.usuarios:hover{
+    transition:1s;
+    background-color: #226384 !important;
+}
+
+.labels-usuario{
+    font-size: 11pt;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 1px #000000;
+}
+
+.labels-caixinha{
+    color: #FFFFFF;
+    font-size: 15px;
+}
+
+
+/*BOTÃO EXIBIR DETALHES*/
+.btn-black{
+    background-color: rgb(255, 255, 255) !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+}
+.btn-black:hover{
+    transition:0.5s;
+    background-color: rgba(0, 0, 0, 1) !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}

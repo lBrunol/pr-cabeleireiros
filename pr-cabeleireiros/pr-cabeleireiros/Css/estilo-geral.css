@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+/*DIV PRINCIPAL COM FUNDO CINZA DA TELA DE LOGIN*/
+#principalHome{
+    background-color: rgba(232, 232, 232, 0.99);
+    width: 100%;
+
+}
+
+/*DIV LOGIN NA TELA DE INÍCIO*/
+#login{
+    box-shadow: 7px 7px 7px #c5c5c5;
+    position: absolute;
+    background-color: #ffffff;
+    width:400px;
+    height: 400px;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    margin:auto;
+    padding:20px;
+
+}
+
+/*BOTÃO ENTRAR NA TELA DE INÍCIO*/
+.btn-black{
+    background-color: rgba(0, 0, 0, 0) !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+}
+.btn-black:hover{
+    transition:0.5s;
+    background-color: rgba(0, 0, 0, 1) !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+

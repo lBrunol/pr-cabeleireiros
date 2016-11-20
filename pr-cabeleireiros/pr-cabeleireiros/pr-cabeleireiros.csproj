@@ -89,11 +89,50 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\images\baixa-umidade-ar.jpg" />
+    <Content Include="Assets\images\banner-02.jpg" />
+    <Content Include="Assets\images\banner-mobile.jpg" />
+    <Content Include="Assets\images\banner.jpg" />
+    <Content Include="Assets\images\beneficios-meditacao.jpg" />
+    <Content Include="Assets\images\corrida.jpg" />
+    <Content Include="Assets\images\edificio-dr-adib-jatene.jpg" />
+    <Content Include="Assets\images\exercicio-fisico.jpg" />
+    <Content Include="Assets\images\hcor-consultorios.jpg" />
+    <Content Include="Assets\images\hcor-diagnostico-unidade-cidade-jardim.jpg" />
+    <Content Include="Assets\images\hcor-diagnostico-unidade-paraiso.jpg" />
+    <Content Include="Assets\images\hcor-explica-transplante-coracao.jpg" />
+    <Content Include="Assets\images\hcor-explica-tratamento-lesoes-meniscos.jpg" />
+    <Content Include="Assets\images\hcor-hospital-do-coracao.jpg" />
+    <Content Include="Assets\images\hcor-joint-commission-international.png" />
+    <Content Include="Assets\images\hcor-logo.png" />
+    <Content Include="Assets\images\hcor-onco-clinica-radioterapia.jpg" />
+    <Content Include="Assets\images\loader.gif" />
+    <Content Include="Assets\images\massagem-cardiaca.jpg" />
+    <Content Include="Assets\images\preloader-submit.gif" />
+    <Content Include="Assets\images\tratamento-varizes.jpg" />
+    <Content Include="Assets\js\scripts.js" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\estilo-geral.css" />
+    <Content Include="css\manager.css" />
+    <Content Include="css\pr-cabeleireiros-codes.css" />
+    <Content Include="css\style.css" />
+    <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="gulpfile.js" />
+    <Content Include="Images\brand.jpg" />
+    <Content Include="Images\user2.png" />
+    <Content Include="Images\user3.png" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\manager.js" />
+    <Content Include="js\script-geral.js" />
+    <Content Include="style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ComandasController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -102,6 +141,34 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Layouts\_LayoutDefault.cshtml" />
+    <Content Include="Assets\stylus\base\_animations.styl" />
+    <Content Include="Assets\stylus\base\_classes.styl" />
+    <Content Include="Assets\stylus\base\_general.styl" />
+    <Content Include="Assets\stylus\base\_tipography.styl" />
+    <Content Include="Assets\stylus\components\components.styl" />
+    <Content Include="Assets\stylus\config\_colors.styl" />
+    <Content Include="Assets\stylus\config\_grid_sizes.styl" />
+    <Content Include="Assets\stylus\config\_sizes.styl" />
+    <Content Include="Assets\stylus\layouts\_body.styl" />
+    <Content Include="Assets\stylus\layouts\_header.styl" />
+    <Content Include="Assets\stylus\layouts\_site.styl" />
+    <Content Include="Assets\stylus\style.styl" />
+    <Content Include="Assets\stylus\tools\helpers.styl" />
+    <Content Include="Assets\stylus\util\_util-classes.styl" />
+    <Content Include="package.json" />
+    <Content Include="Views\Comandas\Index.cshtml" />
+    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\stylus\components\body\_box-site.styl" />
+    <Content Include="Assets\stylus\layouts\_buttons.styl" />
+    <Content Include="Assets\stylus\layouts\_forms.styl" />
+    <Content Include="Assets\stylus\components\forms\_text-group.styl" />
+    <Content Include="Assets\stylus\components\body\_separator-fields.styl" />
+    <Content Include="Assets\stylus\components\body\_table-site.styl" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -111,7 +178,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Assets\stylus\components\footer\" />
+    <Folder Include="Assets\stylus\components\header\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>

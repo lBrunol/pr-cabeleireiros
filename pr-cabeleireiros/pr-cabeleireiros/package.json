@@ -1,0 +1,34 @@
+{
+  "name": "pr-cabeleireiros",
+  "version": "1.0.0",
+  "description": "sistema de controle financeiro da PR Cabeleireiros",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lBrunol/pr-cabeleireiros.git"
+  },
+  "author": "Bruno Alves e Thiago Pereira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lBrunol/pr-cabeleireiros/issues"
+  },
+  "homepage": "https://github.com/lBrunol/pr-cabeleireiros#readme",
+  "dependencies": {
+    "add": "^2.0.6",
+    "autoprefixer": "^6.5.3",
+    "browser-sync": "^2.18.1",
+    "cssnano": "^3.8.0",
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^6.2.0",
+    "gulp-sourcemaps": "^2.2.0",
+    "gulp-stylus": "^2.6.0",
+    "gulp-tinypng-compress": "^1.2.1",
+    "gulp-uglify": "^2.0.0",
+    "pump": "^1.0.1",
+    "yarn": "^0.17.3"
+  }
+}

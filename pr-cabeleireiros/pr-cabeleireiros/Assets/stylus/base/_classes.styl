@@ -1,0 +1,25 @@
+/**
+ * Classes adicionais
+ */
+ 
+.-static {
+	position: static!important;
+}
+
+.-section {
+	margin-top: 15px;
+}
+
+.fade {
+	opacity: 0;
+	animation: fadeIn .3s linear forwards;
+}
+
+.containeroverflow {
+	width: 100%;
+	
+	@media (max-width: $screen-sm) {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+}

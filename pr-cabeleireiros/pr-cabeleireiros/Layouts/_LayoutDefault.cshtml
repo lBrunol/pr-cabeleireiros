@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">    
+    
+    <link rel="stylesheet" href="~/Css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Css/style.css" />
+    <link rel="stylesheet" href="~/Css/pr-cabeleireiros-codes.css" />
+    <link rel="stylesheet" href="~/Css/estilo-geral.css" />
+    <link rel="stylesheet" href="~/Css/manager.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-primary">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">PR Cabeleireiros</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav nav-primrary">
+                            <li><a href="#"> Administração <span class="sr-only">(current)</span></a></li>
+                            <li><a href="#">Agenda de Serviços</a></li>
+                        </ul>
+                        <button class="btn btn-top navbar-btn navbar-right"><span class="glyphicon glyphicon-log-out"></span> Encerrar Sistema</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container begin-content">
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>
+        @*<nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <p class="navbar-text navbar-right">Sistema de gerenciamento para Salão de beleza</p>
+            </div>
+        </nav>*@
+    </div>
+
+    <script src="~/Js/jquery.js"></script>
+    <script src="~/Js/bootstrap.min.js"></script>
+    <script src="~/Js/manager.js"></script>
+
+</body>
+</html>
