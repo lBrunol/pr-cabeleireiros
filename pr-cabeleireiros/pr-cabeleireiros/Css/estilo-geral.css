@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 /*DIV PRINCIPAL COM FUNDO CINZA DA TELA DE LOGIN*/
 #principalHome{
@@ -13,7 +13,7 @@
     position: absolute;
     background-color: #ffffff;
     width:400px;
-    height: 400px;
+    height: 300px;
     top:0;
     bottom: 0;
     left:0;

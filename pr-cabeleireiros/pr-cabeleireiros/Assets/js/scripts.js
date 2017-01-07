@@ -1,319 +1,213 @@
+$(function () {
+    $('.table-site.-selectable tbody tr').on('click', function () {
 
-$(function(){
+        var $tableMaster = $(this).closest('.table-site.-selectable');
+        var isMultiSelectable = $tableMaster.hasClass('-multiselectable');
+        var $checkbox = $(this).find('.custom-checkbox input[type="checkbox"]');
+        var isChecked = $checkbox.prop('checked');
 
-    responsiveImage();
-    menuFixed();
-
-    // Formulário de contato
-    $('.wpcf7-form').on('DOMNodeInserted', function (e) {
-        if ($(e.target).hasClass('wpcf7-not-valid-tip')) {
-            $(e.target).addClass('help-block');
-            $(e.target).parent().parent().addClass('has-error');
+        if (!isMultiSelectable) {
+            $tableMaster.find('tbody .custom-checkbox input[type="checkbox"]').prop('checked', false);
         }
 
-        if ($(e.target).hasClass('wpcf7-mail-sent-ok'))
-            $('.wpcf7-form .message').html('<div role="alert" class="alert alert-success text-center">' + $(e.target).text() + '</div>');
-
-        if ($(e.target).hasClass('wpcf7-validation-errors'))
-            $('.wpcf7-form .message').html('<div role="alert" class="alert alert-danger text-center">' + $(e.target).text() + '</div>');
-    });
-
-    $('.wpcf7-submit').on('click', function () {
-        $('.wpcf7-form .alert').remove();
-        $('.ajax-loader').attr('src', '/wp-content/themes/hcor/images/preloader-submit.gif');
-        $('.wpcf7-form .form-group').removeClass('has-error');
-    });
-    
-    // Mascaras
-    $('.mask-telefone').mask('(99) 9999-9999?9', { placeholder: ' ' });
-    $('.mask-cep').mask('99999-999', { placeholder: ' ' });
-
-    $('.touch .top-item > .link').on('click', function(e){
-        e.preventDefault();
-
-        $(this).parent().siblings().find('.quick-submenu, .link').removeClass('js-actived');
-        $(this).toggleClass('js-actived');
-        $(this).parent().find('.quick-submenu').toggleClass('js-actived');
-    });    
-
-    //Toggle do rodapé
-    $('.js-sitemap-toggle > .js-item > .link').on('click', function(e){
-        if (!validaTela(768))
-            e.preventDefault();
-
-        $(this).toggleClass('js-actived').parent().find('.list-secondary').toggleClass('js-actived');
-    });
-    
-    //Toggle do menu
-    $('.nav-item > .link.-has-submenu').on('click', function(e){
-        if((!validaTela(1304)) || (validaTela(1305) && $('html').hasClass('touch'))) {
-            e.preventDefault();
-            $(this).parent().siblings().find('.submenu-container, > .link.-has-submenu').removeClass('js-actived');
-            $(this).stop().toggleClass('js-actived').parent().find('.submenu-container').stop().toggleClass('js-actived');
-        }
-    });
-
-    //Toggle do menu de segundo nível
-    $('.nav-submenu > .-first > .nav-link').on('click', function(e){
-        if(!validaTela(1305)) {
-            e.preventDefault();
-            $(this).stop().toggleClass('js-actived').parent().children('ul').stop().toggleClass('js-actived');
-        }
-    });
-    
-
-    $('.nav-item > .link.-close').on('click', function(e){
-        e.preventDefault();
-        $('.main-navigation').removeClass('js-actived');
-        $('body').removeClass('_overflow-hidden js-menu-active');
-    });
-
-    $('.navbar-control .navbar-toggle').on('click', function(){
-        $('.main-navigation').addClass('js-actived');
-        $('body').addClass('_overflow-hidden js-menu-active');
-    });
-
-    $('.search-box .input-button .button').on('click', function(e){
-        e.preventDefault();
-        var $input = $(this).closest('.search-box').children('.input');
-        if(!validaTela(1335)) {
-            if($input.hasClass('js-visible')) {
-                if($input.val().trim().length > 0) {
-                    alert('pesquisou por: ' + $input.val());
-                } else {
-                    $input.removeClass('js-visible');
-                }
-            } else {
-                $input.addClass('js-visible');
-            }
+        if (isChecked) {
+            $checkbox.prop('checked', false);
         } else {
-            if($input.val().trim().length > 0)
-                alert('pesquisou por: ' + $input.val());
+            $checkbox.prop('checked', true);
         }
     });
 
-    $('.main-banner').owlCarousel({
-        items: 1,
-        singleItem: true,
-        navigation: true,
-        navigationText: ['<span class="icon icon-left"></span>','<span class="icon icon-right"></span>'],
-        pagination: true,
-        autoHeight: true,
-        beforeInit: function(){
-            responsiveImage();
+    /* Delega o evento click ao adicionar itens do pedido */
+    $('body').on('click', '.delete-row', function () {
+
+        //Remove o código atual do array de controle dos produtos
+        //lstCodigosProdutos.splice(lstCodigosProdutos.indexOf(parseInt($(this).parent().siblings().eq(0).text()), 0));
+
+        //Remove a linha atual
+        $(this).parent().parent().remove();
+
+        //Caso a linha com valores de produtos seja a última, ele mostra a linha de adiciona itens
+        if ($('.table-services tbody tr').length <= 1) {
+            $('.table-services .no-items').show();
+        }
+
+        $('.total-bruto .value').text(somaValoresTotais($('.table-services')));
+    });
+
+    $('body').delegate('.modal-services .btn-add', 'click', function () {
+        var $modal = $(this).closest('.modal-services');
+        var $activeCheckbox = $modal.find('input[type="checkbox"]:checked');
+
+
+        if ($activeCheckbox.length > 0) {
+
+            $activeCheckbox.each(function (index) {
+                var $row = $(this).closest('tr');
+
+                $('.table-services tbody').append('<tr></tr>');
+                $('.table-services tbody tr:last-child').append('<td>' + $row.find('td').eq(0).text() + '</td><td>' + $row.find('td').eq(1).text() + '</td><td>' + $row.find('td').eq(2).text() + '</td><td><input type="text" class="form-control" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" /></td>' + '</td><td><input type="text" class="form-control" onkeypress="return(apenasNumeros(event))" /></td><td>Carlos da Silva</td><td><button class="btn btn-danger btn-sm delete-row"><span class="icon-trash-empty"></span> Excluir</button></td>');
+                $('.total-bruto > .value').text(numeroParaMoeda(deRealParaFloat($('.total-bruto > .value').text()) + deRealParaFloat($row.find('td').eq(2).text())));
+            });
+
+            $('.table-services').find('.no-items').hide();
+
         }
     });
 
-    $('.js-carousel-youtube').owlCarousel({
+    $('body').on('click', '.modal-clients .btn-add', function () {
 
-        itemsCustom: [
-            [0, 1],
-            [624, 2]
-        ],
-        pagination: true
-    });
+        var table;
+        var $modal = $(this).closest('.modal-clients');
+        var $activeCheckbox = $modal.find('input[type="checkbox"]:checked');
+        var dataTarget = $(this).data('target');
+        var value;
 
-    $('.js-carousel-facebook').owlCarousel({        
-        itemsCustom: [
-            [0, 1],
-            [624, 3]
-        ],
-        pagination: true
-    });
+        if ($activeCheckbox.length > 0) {
 
-    $('.js-carousel-unidades').owlCarousel({
-        autoHeight: true,
-        itemsCustom: [
-            [0, 1],
-            [1138, 2],
-            [1319, 3]
-        ],
-        pagination: true
-    });
+            $activeCheckbox.each(function (index) {
+                var $row = $(this).closest('tr');
+                value = $row.find('.name-client').text();
 
-    // Evento click
-    $('.js-social').on('click', function (e) {
-        e.preventDefault();
-        social.share($(this).attr('data-social'));
-    });
-
-     //Aumentar/Diminuir o tamanho da fonte
-    $('.js-font-increase').on('click', function(){
-        var currentSize = parseInt($('html').css('font-size'));
-
-        if(currentSize != 24){
-            currentSize += 2;
-            $('html').css('font-size', currentSize);
+            });
+            $(dataTarget).val(value);
         }
     });
 
-    $('.js-font-decrease').on('click', function(){
-        var currentSize = parseInt($('html').css('font-size'));
-
-        if(currentSize != 10){
-            currentSize -= 2;
-            $('html').css('font-size', currentSize);
-        }
+    /* Desmarca a classe active-tr ao sair do modal */
+    $('.modal').on('hidden.bs.modal', function (e) {
+        $(this).find('input[type="checkbox"]').prop('checked', false);
+        $('.total-pedido > .value').text(numeroParaMoeda(deRealParaFloat($('.total-bruto > .value').text()) - deRealParaFloat($('.desconto-pedido > .value').text()) + deRealParaFloat($('.caixinha-pedido > .value').text())));
     });
+});
 
-    //Escala cinza na página
-    $('.js-high-contrast').on('click', function(){
-        $('body').toggleClass('-grayscale');
-    });
+/* Função para calcular o valor total com base na quantidade e valor passados por parâmetro
+* @param quant {int} passar a quantidade do item para ser calculado
+* @param valor {float, int, double} passar o valor para o calculo do valor total
+*/
+function calculaValorTotal(quant, valor) {
 
-    $('body').on('click', '.js-toggle-box .js-toggle-control', function(e){
-        e.preventDefault();
-    
-        $(this).closest('.js-item-toggle').siblings('.js-item-toggle').find('.js-toggle-control, .js-toggle-content').removeClass('js-actived');
-    
-        if(!$(this).hasClass('js-actived'))
-            $(this).addClass('js-actived').closest('.js-item-toggle').find('.js-toggle-content').addClass('js-visible');
-        else
-            $(this).removeClass('js-actived').closest('.js-item-toggle').find('.js-toggle-content').removeClass('js-visible');
-    
-    });
+    var valorTotal;
 
-    $('.nav-internal .item:first-child > .link').on('click', function(){
-        $(this).parent().siblings().toggleClass('js-active');
-    });
+    valorTotal = valor * quant;
 
-    $('.news-site.-youtube > .link').on('click', function(e, current){
-        e.preventDefault();
-        var $self = current === undefined ? $(this) : current;
-        var $iframe = $self.closest('.news-site.-youtube').find('.video.-youtube');
-
-        $self.find('.icon').addClass('js-active');
-
-        //Chama a função que instância a classe de vídeos do youtube e da play
-        onYouTubeIframeAPIReady($iframe.attr('id'));
-
-        setTimeout( function(){
-            $self.addClass('js-hidden');
-            $self.closest('.news-site.-youtube').find('.embed').addClass('js-visible');
-        }, 500);
-    });
-
-    $('.news-site.-youtube .news-label .js-link').on('click', function(e){
-        e.preventDefault();
-        var $self = $(this).closest('.news-site.-youtube').find('> .link');
-
-        if(!$self.hasClass('js-hidden'))
-            $('.news-site.-youtube > .link').trigger('click', [$self]);
-        
-    });
-
-    function onYouTubeIframeAPIReady(video) {
-        new YT.Player(video, {
-            events: {
-                'onReady': playVideoYT,
-            }
-        });        
+    if (!isNaN(valorTotal)) {
+        return valorTotal;
+    } else {
+        return 0;
     }
-
-    function playVideoYT(event) {
-        event.target.playVideo();
-    }
-    
-});
-
-$(window).on('resize', function(){
-    if(validaTela(1305)) $('body').removeClass('_overflow-hidden');
-     responsiveImage();
-});
-
-$(window).on('scroll', function(){
-    menuFixed();
-});
-
-/***************************************************************************************************************************************
-****************************************                 FUNÇÕES                                  **************************************
-****************************************************************************************************************************************/
-
-/*
-* verifica a posição do scroll para adicionar uma classe que fará a retração do menu quando o scroll for > 0.
- */
-function menuFixed() {
-    if ( $(window).scrollTop() > 0 )
-        $('body').addClass('js-menu-fixed');
-    else
-        $('body').removeClass('js-menu-fixed');
 }
 
-/*
-* Adiciona uma classe ao elemento html, indicando se o dispositvo é touch-screen.
- */
-(function checkTouch() {
-    if ("ontouchstart" in document.documentElement || (window.DocumentTouch && document instanceof DocumentTouch)) {
-        document.documentElement.className += ' touch';
-        isTouch = true;
-    } else {
-        document.documentElement.className += ' no-touch';
-        isTouch = false;
-    }
-})();
+function somaValoresTotais(el) {
 
-/*
-* Verifica a largura da tela.
-* @param int valor que será comparado a largura do objeto window na função.
-* @return boolean retorna true caso o parâmetro seja menor que a largura da tela e false caso contrário.
-*/
-function validaTela(largura) {return jQuery(window).width() >= largura;}
+    var valorTotal = 0;
 
-/*
-* Troca a imagem dos elementos com a classe designada na chamada da função. A função identifica atributos.
-* data (data-img-mobile, data-img-tablet, data-img-default) no elemento para trocar os "src" das imagens. 
-* IMPORTANTE: passe o caminho completo da imagem no atributo data.
-* @param String elemento(s) que terão as imagens trocadas. Caso a classe não seja definida, a função assume o padrão 'js-img-reponsive'.
-*/
-function responsiveImage(classe) {
-    classe === undefined ? classe = '.js-img-responsive' : classe = classe;
-    clearTimeout(time);
+    $(el).find('.value').each(function () {
+        valorTotal = valorTotal + deRealParaFloat($(this).text());
+    });
 
-    var time = setTimeout(function () {
-        $(classe).each(function () {
-            mobile = validaTela('481');
-            tabletL = validaTela('769');
-
-            if($(this).data('img-mobile') != null && !mobile) {
-                $(this).attr('src', $(this).data('img-mobile'));
-            } else if ($(this).data('img-tablet') != null && !tabletL) {
-                $(this).attr('src', $(this).data('img-tablet'));
-            } else {
-                $(this).attr('src', $(this).data('img-default'));
-            }
-        });
-    }, 150);
+    return numeroParaMoeda(valorTotal);
 }
 
-/***************************************************************************************************************************************
-***************************************                 PROTÓTIPOS                                  ************************************
-****************************************************************************************************************************************/
-
-/**
- * Corta uma string de acordo com o comprimento passado via parâmetro
- * @param int maxLength { default = 100} Comprimento máximo da string
- */
-String.prototype.cropText = function(maxLength = 100) {
-
-    var outStr = this;
-    var lenghtSaida;
-
-    if (outStr.length > maxLength && maxLength > 0) {
-        outStr = outStr.substring(0, maxLength);
-        lenghtSaida = outStr.length;
+/* Função que restringe a digitação para apenas números. Chamar a função em algum evento do teclado como keypress, keydown.
+* @param e {event} 
+*/
+function apenasNumeros(e) {
+    var tecla = e.keyCode ? e.keyCode : e.charCode
+    if ((tecla > 47 && tecla < 58)) { // numeros de 0 a 9
+        return true;
     } else {
-        lenghtSaida = outStr.length - 1;
-    }
-
-    if (this.substring(lenghtSaida, 1) != " ") {
-        var lastSpace = outStr.lastIndexOf(" ");
-        
-        if (lastSpace != -1) {
-            outStr = outStr.substring(0, lastSpace);
+        if (tecla != 8 && tecla != 9 && tecla != 44) { // backspace , // tab e // vírgula
+            return false;
+        } else {
+            return true;
         }
     }
+}
 
-    outStr += "...";
+/* Valida se há texto inválido nos campos preenchidos através dos modais */
+function validaTextoInvalido(el) {
+    if (typeof $(el).attr('data-id') == 'undefined') {
+        $(el).val('');
+        return;
+    }
+}
 
-    return outStr;
+/* Função que desativa a digitação no campo
+* @param e {event} 
+*/
+function travaDigitacao(e) {
+    return false;
+}
+
+/* Função que converte um número para o formato de moeda.
+* @param num {float} 
+*/
+function numeroParaMoeda(num) {
+    var x = 0;
+
+    num = num + "";
+    num = num.replace(",", ".");
+
+    if (num < 0) { num = Math.abs(num); x = 1; }
+
+    if (isNaN(num)) num = "0";
+    cents = Math.floor((num * 100 + 0.5) % 100);
+    num = Math.floor((num * 100 + 0.5) / 100).toString();
+
+    if (cents < 10) cents = "0" + cents;
+    for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3) ; i++)
+        num = num.substring(0, num.length - (4 * i + 3)) + '.' + num.substring(num.length - (4 * i + 3));
+
+    ret = num + ',' + cents;
+    if (x == 1)
+        ret = '-' + ret;
+
+    ret = adicionaReal(ret);
+
+    return ret;
+}
+
+/* Função que adiciona o R$ em um número passado por parâmetro
+* @param num {float} 
+*/
+function adicionaReal(num) {
+    num = "R$ " + num;
+    return num;
+}
+
+/* Função que retira o R$ em um número passado por parâmetro
+* @param num {String} 
+*/
+function retiraReal(num) {
+    num = num.replace("R$ ", "");
+    return num;
+}
+
+/* Função que substitui a virgula por ponto
+* @param num {String} 
+*/
+function deVirgulaParaPonto(num) {
+    num = num.replace(",", ".");
+    return num;
+}
+
+/* Função converte de moeda para número
+* @param num {float} 
+*/
+function moedaParaNumero(num) {
+    num = num.replace(".", "");
+    num = num.replace(",", ".");
+    num = Number.parseFloat(num);
+    return num;
+}
+
+function deRealParaFloat(num) {
+    return moedaParaNumero(retiraReal(num));
+}
+/* Função que atribui texto a um elemento passado por parâmetro
+* @param el {object} elemento a ser alterado
+* @param val {string} valor que será atribuido ao elemento
+*/
+function atribuiTexto(el, val) {
+    $(el).val(val);
 }

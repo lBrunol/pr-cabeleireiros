@@ -126,6 +126,7 @@
     <Content Include="js\jquery.js" />
     <Content Include="js\manager.js" />
     <Content Include="js\script-geral.js" />
+    <Content Include="js\scripts.js" />
     <Content Include="style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -133,6 +134,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ComandasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -169,6 +171,12 @@
     <Content Include="Assets\stylus\components\forms\_text-group.styl" />
     <Content Include="Assets\stylus\components\body\_separator-fields.styl" />
     <Content Include="Assets\stylus\components\body\_table-site.styl" />
+    <Content Include="Assets\stylus\layouts\modal.styl" />
+    <Content Include="Assets\stylus\components\forms\custom-checkbox.styl" />
+    <Content Include="Assets\stylus\layouts\check.styl" />
+    <Content Include="Assets\stylus\components\body\_list-comandas.styl" />
+    <Content Include="Assets\stylus\components\body\_sidebar-nav.styl" />
+    <Content Include="Views\Login\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

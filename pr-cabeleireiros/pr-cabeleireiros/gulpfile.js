@@ -11,6 +11,7 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var uglify = require('gulp-uglify');
 var pump = require('pump');
+var tinypng = require('gulp-tinypng-compress');
 
 gulp.task('browser-sync', function() {
     var files = [
@@ -72,6 +73,18 @@ gulp.task('stylus', function () {
 		.pipe(gulp.dest('./'));
 });
 
+gulp.task('tinypng', function () {
+    gulp.src('./assets/images/*.{png,jpg,jpeg}')
+		.pipe(plumber())
+		.pipe(tinypng({
+		    summarize: true,
+		    key: '6v2u5rL4CG5PKQPKXFILHwl7m1cJUCWg',
+		    sigFile: './images/.tinypng-sigs',
+		    log: true
+		}))
+		.pipe(gulp.dest('./images/'));
+});
+
 gulp.task('javascript', function () {
     pump([
         gulp.src('./assets/js/*.js'),
@@ -83,4 +96,4 @@ gulp.task('javascript', function () {
 gulp.task('default', ['stylus:watch', 'javascript:watch']);
 gulp.task('onlyCss', ['stylus:watch']);
 gulp.task('build', ['buildfiles']);
-gulp.task('buildAll', ['buildfiles', 'javascript']);
+gulp.task('buildAll', ['buildfiles', 'tinypng', 'javascript']);

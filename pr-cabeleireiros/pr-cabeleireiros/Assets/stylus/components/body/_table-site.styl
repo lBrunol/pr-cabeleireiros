@@ -1,4 +1,14 @@
-﻿.table-site { 
+﻿.table-site {
+	
+	&.-selectable {
+		tr:hover,
+		tr.js-active {
+			cursor: pointer;
+			background-color: lighten($background-color, 30%);
+			color: #fff;
+		}
+	}
+	
 	> thead > tr > th, 
 	> tbody > tr > th, 
 	> tfoot > tr > th, 

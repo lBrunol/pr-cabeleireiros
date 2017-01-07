@@ -4,7 +4,22 @@
     Layout = "~/Layouts/_LayoutDefault.cshtml";
 }
 <div class="col-md-3">
-
+    <div class="box-site -small -fixheight -overflowy">
+        <h3 class="text-center"><span class="icon-doc-text"></span><span class="_red">Comandas Abertas</span></h3>
+        <ul class="list-comandas">
+            <li><a href="#"><strong>Maria da Silva</strong> - <small>23/11/2016 11:05</small></a></li>
+            <li><a href="#"><strong>Carlos Junqueira</strong> - <small>23/11/2016 12:15</small></a></li>
+            <li><a href="#"><strong>Marinalva Soares</strong> - <small>23/11/2016 12:35</small></a></li>
+        </ul>
+    </div>
+    <div class="box-site -small -fixheight">
+        <h3 class="text-center"><span class="icon-doc-text"></span><span class="_green">Comandas Fechadas</span></h3>
+        <ul class="list-comandas">
+            <li><a href="#"><strong>Camila Martines</strong> - <small>23/11/2016 09:35</small></a></li>
+            <li><a href="#"><strong>Francisca Evangelista de Souza</strong> - <small>23/11/2016 10:20</small></a></li>
+            <li><a href="#"><strong>Maria Clara Araújo</strong> - <small>23/11/2016 10:40</small></a></li>
+        </ul>
+    </div>
 </div>
 <div class="col-md-9">
     <div class="box-site -small">
@@ -17,9 +32,9 @@
             <div class="form-group col-md-8">
                 <label>Cliente</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" id="input-cliente" />
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default">+ Incluir</button>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target=".modal-clients">+ Incluir</button>
                     </span>
                 </div>
             </div>
@@ -28,43 +43,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-group">
-                    <label class="text">Serviços prestados</label><button type="button" class="btn btn-default button">+ Incluir</button>
+                    <label class="text">Serviços prestados</label><button type="button" class="btn btn-default button" data-toggle="modal" data-target=".modal-services">+ Incluir</button>
                 </div>
-                <table class="table table-site"> 
+                <table class="table table-site table-services"> 
                     <thead> 
                         <tr> 
                             <th>Código</th> 
                             <th>Item</th> 
                             <th>Valor</th> 
                             <th>Desconto</th> 
+                            <th>Qtde.</th>
                             <th>Funcionário</th>
                             <th></th>
                         </tr> 
-                    </thead> 
-                    <tbody> 
-                        <tr> 
-                            <th scope="row">1</th> 
-                            <td>Escova</td> 
-                            <td>R$ 35,00</td> 
-                            <td><input type="text" class="input form-control" /></td>
-                            <td>Joana Soares</td>
-                            <td><button class="btn btn-danger btn-sm"><span class="icon-trash-empty"></span> Excluir</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Manicure</td>
-                            <td>R$ 20,00</td>
-                            <td><input type="text" class="input form-control" /></td>
-                            <td>Joana Soares</td>
-                            <td><button class="btn btn-danger btn-sm"><span class="icon-trash-empty"></span> Excluir</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Pedicure</td>
-                            <td>R$ 25,00</td>
-                            <td><input type="text" class="input form-control" /></td>
-                            <td>Joana Soares</td>
-                            <td><button class="btn btn-danger btn-sm"><span class="icon-trash-empty"></span> Excluir</button></td>
+                    </thead>
+                    <tbody>
+                        <tr class="no-items">
+                            <td colspan="7">Não existem serviços no pedido</td>
                         </tr>
                     </tbody> 
                 </table>
@@ -74,11 +69,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-right">
-                    <p><strong>Valor total:</strong> R$ 80,00</p>
-                    <p><strong>Desconto:</strong> R$ 10,00</p>
-                    <p><strong>Caixinha:</strong> R$ 0,00</p>
+                    <p class="total-bruto"><strong>Valor total:</strong> <span class="value">R$ 0,00</span></p>
+                    <p class="desconto-pedido"><strong>Desconto:</strong> <span class="value">R$ 0,00</span></p>
                     <hr class="separator-fields">
-                    <p><strong>Total do pedido:</strong> R$ 70,00</p>
+                    <p class="total-pedido"><strong>Total do pedido:</strong> <span class="value">R$ 0,00</span></p>
                 </div>
             </div>
         </div>
@@ -86,8 +80,309 @@
         <div class="row">
             <div class="col-md-12">
                 <button class="btn btn-default"><span class="icon-doc-text"></span> Nova comanda</button>
-                <button class="btn btn-success"><span class="icon-money"></span>Receber</button>
-                <button class="btn btn-danger"><span class="icon-cancel"></span>Cancelar Comanda</button>
+                <button class="btn btn-success" data-toggle="modal" data-target=".modal-payment"><span class="icon-money"></span>Receber</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".modal-confirme-cancelamento"><span class="icon-cancel"></span>Cancelar Comanda</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-services" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Inclusão de serviços</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-7 col-xs-9">
+                        <div class="form-group">
+                            <label for="txtNomeServico">Nome do Serviço</label>
+                            <input type="text" class="form-control" name="txtNomeServico" placeholder="Nome do Serviço" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-site -selectable -multiselectable">
+                            <thead>
+                                <tr>
+                                    <th>Selecionar</th>
+                                    <th>Código</th>
+                                    <th>Item</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th><label class="custom-checkbox"><input type="checkbox" value="1" /><span class="indicator"></span></label></th>
+                                    <td scope="row">1</td>
+                                    <td>Escova</td>
+                                    <td>R$ 35,00</td>
+                                </tr>
+                                <tr>
+                                    <th><label class="custom-checkbox"><input type="checkbox" value="2" /><span class="indicator"></span></label></th>
+                                    <td scope="row">2</td>
+                                    <td>Chapinha</td>
+                                    <td>R$ 25,00</td>
+                                </tr>
+                                <tr>
+                                    <th><label class="custom-checkbox"><input type="checkbox" value="3" /><span class="indicator"></span></label></th>
+                                    <td scope="row">3</td>
+                                    <td>Manicure</td>
+                                    <td>R$ 15,00</td>
+                                </tr>
+                                <tr>
+                                    <th><label class="custom-checkbox"><input type="checkbox" value="4" /><span class="indicator"></span></label></th>
+                                    <td scope="row">4</td>
+                                    <td>Pedicure</td>
+                                    <td>R$ 35,00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="icon-cancel"></span>Cancelar</button>
+                <button type="button" class="btn btn-default btn-add" data-dismiss="modal">+ Incluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-payment" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Pagamento comanda - Maria da Silva</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class=""><strong>Total a receber:</strong> <span class="value">R$ 0,00</span></p>
+                        <p class=""><strong>Troco:</strong> <span class="value">R$ 0,00</span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" disabled class="btn btn-default">Gorjeta</button>
+                        <button type="button" disabled class="btn btn-default">Crédito</button>
+                    </div>
+                </div>
+                <hr class="separator-fields">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Dinheiro:</label>
+                        <input type="text" class="form-control" placeholder="Dinheiro">
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Restante em dinheiro">R</button>
+                    </div>                    
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Cartão de débito:</label>
+                        <input type="text" class="form-control" placeholder="Débito">
+                        <select class="form-control">
+                            <option value="master">Master</option>
+                            <option value="visa">Visa</option>
+                        </select>
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Restante em débito">R</button>
+                        @*<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Pagar com mais de um cartão">+</button>*@
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Cartão de crédito:</label>
+                        <input type="text" class="form-control" placeholder="Crédito">
+                        <select class="form-control">
+                            <option value="master">Master</option>
+                            <option value="visa">Visa</option>
+                        </select>
+                        <select class="form-control">
+                            <option value="1">1x</option>
+                            <option value="2">2x</option>
+                            <option value="3">3x</option>
+                        </select>
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Restante em crédito">R</button>
+                        @*<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Pagar com mais de um cartão">+</button>*@
+                    </div>
+                </div>                
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Fiado:</label>
+                        <input type="text" class="form-control" placeholder="Fiado">
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Restante fiado">R</button>
+                    </div>
+                </div>
+                <div class="container-outros-pagamentos">
+                    <p><a href=".outros-pagamentos" data-toggle="collapse" data-parent=".container-outros-pagamentos">Outras opções de pagamento</a></p>
+                    <div class="outros-pagamentos collapse">
+                        <div class="container-cheque-vista">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label>Cheque a vista:</label>
+                                    <input type="text" class="form-control" placeholder="Cheque a vista">
+                                    <button type="button" class="btn btn-default" href=".cheque-vista" data-parent=".container-cheque-vista" data-toggle="collapse" data-placement="top" title="Inserir informações...">+</button>
+                                </div>
+                            </div>
+                            <div class="form-inline cheque-vista collapse">
+                                <div class="form-group">
+                                    <label>Informações cheque a vista:</label>
+                                    <select class="form-control">
+                                        <option value="master">Bradesco</option>
+                                        <option value="visa">Banco do Brasil</option>
+                                        <option value="visa">Caixa</option>
+                                        <option value="visa">Itaú</option>
+                                    </select>
+                                    <input type="text" class="form-control" placeholder="Número do cheque">
+                                    @*<input type="text" class="form-control" placeholder="Emitente">*@
+                                    <button class="btn btn-danger btn-sm delete-row" data-toggle="tooltip" data-placement="top" title="Excluir"><span class="icon-trash-empty"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-cheque-prazo">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label>Cheque a prazo:</label>
+                                    <input type="text" class="form-control" placeholder="Cheque a prazo">
+                                    <button type="button" class="btn btn-default ola" href=".cheque-prazo" data-parent=".container-cheque-prazo" data-toggle="collapse" data-placement="top" title="Inserir informações...">+</button>
+                                </div>
+                            </div>
+                            <div class="form-inline cheque-prazo collapse">
+                                <div class="form-group">
+                                    <label>Informações cheque a prazo:</label>
+                                    <select class="form-control">
+                                        <option value="master">Bradesco</option>
+                                        <option value="visa">Banco do Brasil</option>
+                                        <option value="visa">Caixa</option>
+                                        <option value="visa">Itaú</option>
+                                    </select>
+                                    <input type="date" class="form-control" placeholder="Vencimento">
+                                    <input type="text" class="form-control" placeholder="Número do cheque">
+                                    @*<input type="text" class="form-control" placeholder="Emitente">*@
+                                    <button class="btn btn-danger btn-sm delete-row" data-toggle="tooltip" data-placement="top" title="Excluir"><span class="icon-trash-empty"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label>Transferência bancária:</label>
+                                <input type="text" class="form-control" placeholder="Transferência bancária">
+                                <input type="date" class="form-control" placeholder="Data de recebimento">
+                                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Restante através de transferência">R</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-add" data-toggle="modal" data-target=".modal-confirme-fechamento">Fechar comanda</button>
+                <button type="button" class="btn btn-success btn-add" data-toggle="modal" data-target=".modal-confirme-fechamento">Fechar comanda + comprovante</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="icon-cancel"></span>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-clients" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Inclusão de serviços</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="txtNomeServico">Nome do Serviço</label>
+                            <input type="text" class="form-control" name="txtNomeServico" placeholder="Nome do Serviço" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="txtTelefone">Telefone</label>
+                            <input type="text" class="form-control" name="txtTelefone" placeholder="Telefone" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="txtCpf">CPF</label>
+                            <input type="text" class="form-control" name="txtCpf" placeholder="CPF" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-site -selectable -multiselectable">
+                            <thead>
+                                <tr>
+                                    <th>Selecionar</th>
+                                    <th>Código</th>
+                                    <th>Cliente</th> 
+                                    <th>Telefone</th>                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th><label class="custom-checkbox"><input type="checkbox" value="1" /><span class="indicator"></span></label></th>
+                                    <td scope="row">1</td>
+                                    <td class="name-client">Maria de Souza</td>
+                                    <td>(11) 2418-6485</td>
+                                </tr>
+                                <tr>
+                                    <th><label class="custom-checkbox"><input type="checkbox" value="2" /><span class="indicator"></span></label></th>
+                                    <td scope="row">2</td>
+                                    <td class="name-client">Selma Batista</td>
+                                    <td>(11) 2486-6485</td>
+                                </tr>
+                                <tr>
+                                    <th><label class="custom-checkbox"><input type="checkbox" value="3" /><span class="indicator"></span></label></th>
+                                    <td scope="row">3</td>
+                                    <td class="name-client">Karla Evangelista</td>
+                                    <td>(11) 2087-1652</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="icon-cancel"></span>Cancelar</button>
+                <button type="button" class="btn btn-default btn-add" data-dismiss="modal" data-target="#input-cliente">+ Incluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal centralized-modal modal-confirme-fechamento fade" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirme o fechamento desta comanda</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar comanda</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal centralized-modal modal-confirme-cancelamento fade" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirme o cancelamento desta comanda</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar comanda</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
             </div>
         </div>
     </div>
